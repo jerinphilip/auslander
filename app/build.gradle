@@ -32,12 +32,14 @@ android {
 }
 
 dependencies {
-
+    implementation libs.commons.compress
+    implementation libs.okhttp
     implementation libs.appcompat
     implementation libs.material
     implementation libs.constraintlayout
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.preference
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
