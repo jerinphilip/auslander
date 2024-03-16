@@ -25,4 +25,5 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="enter_repository_url">Enter repository URL</string>
     <string name="add_repository">Add Repository</string>
+    <string name="enter_repository_name">Enter repository name</string>
 </resources>
