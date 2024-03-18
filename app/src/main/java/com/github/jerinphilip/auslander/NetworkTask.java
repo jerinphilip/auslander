@@ -1,15 +1,12 @@
-package com.example.myapplication;
+package com.github.jerinphilip.auslander;
 
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class NetworkTask extends AsyncTask<String, Void, String> {
@@ -28,8 +25,7 @@ public class NetworkTask extends AsyncTask<String, Void, String> {
         try {
             ArrayList<Model> models = this.repository.fetchModels();
             // Get the application's directory
-
-            String archiveRoot = this.context.getFilesDir().toString();
+            String archiveRoot = Paths.get(this.context.getFilesDir().toString(), repository.getName()).toString();
             Repository.downloadModels(models, archiveRoot);
         } catch (IOException e) {
             Log.e("NetworkTask", "Error", e);

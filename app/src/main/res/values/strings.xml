@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">slimt</string>
+    <string name="app_name">Auslander</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Translate</string>
+    <string name="first_fragment_label">Auslander</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="source_text_placeholder">Type text to be translated here.</string>

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.github.jerinphilip.auslander;
 
 import android.util.Log;
 
@@ -27,7 +27,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Repository {
     private final String url;

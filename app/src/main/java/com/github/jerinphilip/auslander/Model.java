@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.github.jerinphilip.auslander;
 
 import java.util.Map;
 
