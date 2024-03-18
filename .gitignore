@@ -38,3 +38,5 @@ google-services.json
 # Android Profiling
 *.hprof
 *.jar
+
+*.so
