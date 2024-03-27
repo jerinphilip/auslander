@@ -28,6 +28,43 @@
         android:padding="8dp" />
 
     <LinearLayout
+        android:id="@+id/bottom_action_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <!-- Mic icon 1 -->
+        <ImageView
+            android:id="@+id/icon_mic1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mic_xhdpi"
+            android:layout_gravity="start"
+            android:clickable="false"
+            android:onClick="onMic1Clicked"
+            android:contentDescription="@string/record_description"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <!-- Mic icon 2 -->
+        <ImageView
+            android:id="@+id/icon_mic2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mic_xhdpi"
+            android:layout_gravity="end"
+            android:clickable="false"
+            android:onClick="onMic2Clicked"
+            android:contentDescription="@string/record_description"/>
+
+    </LinearLayout>
+
+    <!--
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,4 +90,5 @@
             android:entries="@array/target_languages" />
 
     </LinearLayout>
+    -->
 </LinearLayout>
