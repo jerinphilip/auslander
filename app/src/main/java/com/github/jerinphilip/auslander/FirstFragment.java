@@ -7,17 +7,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-
 import com.github.jerinphilip.auslander.databinding.FragmentFirstBinding;
 import com.github.jerinphilip.slimt.Model;
-import com.github.jerinphilip.slimt.Service;
-import com.github.jerinphilip.slimt.Package;
 import com.github.jerinphilip.slimt.ModelConfig;
-
+import com.github.jerinphilip.slimt.Package;
+import com.github.jerinphilip.slimt.Service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -25,79 +22,81 @@ import java.util.List;
 
 public class FirstFragment extends Fragment {
 
-    private FragmentFirstBinding binding;
+  private FragmentFirstBinding binding;
 
-    @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+  @Override
+  public View onCreateView(
+      @NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+    binding = FragmentFirstBinding.inflate(inflater, container, false);
+    return binding.getRoot();
+  }
 
+  public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+    Context context = getContext();
+    String appData = context.getFilesDir().getAbsolutePath();
+    String repository = "Bergamot";
+    Path rootPath = Paths.get(appData, repository, "English-German tiny", "ende.student.tiny11");
+    if (rootPath.toFile().exists()) {
+      int encoderLayers = 6;
+      int decoderLayers = 2;
+      int feedForwardDepth = 2;
+      int numHeads = 8;
+      ModelConfig config =
+          new ModelConfig(encoderLayers, decoderLayers, feedForwardDepth, numHeads, "paragraph");
+      // Package archive = new Package();
+
+      String model_name = "model.intgemm.alphas.bin";
+      String vocabulary_name = "vocab.deen.spm";
+      String shortlist_name = "lex.s2t.bin";
+
+      int cacheSize = 1024;
+      Service service = new Service(cacheSize);
+
+      Package archive =
+          new Package(
+              Paths.get(rootPath.toString(), model_name).toString(),
+              Paths.get(rootPath.toString(), vocabulary_name).toString(),
+              Paths.get(rootPath.toString(), shortlist_name).toString(),
+              "");
+
+      Model model = new Model(config, archive);
+
+      TextWatcher watcher =
+          new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+              boolean html = false;
+              List<String> sources = new ArrayList<>();
+              sources.add(s.toString());
+              String[] targets = service.translate(model, sources, html);
+              binding.textviewFirst.setText(targets[0]);
+              // Scroll to the bottom
+              binding.translationScrollView.post(
+                  new Runnable() {
+                    @Override
+                    public void run() {
+                      binding.translationScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                  });
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+          };
+
+      binding.editTextFirst.addTextChangedListener(watcher);
     }
+  }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Context context = getContext();
-        String appData = context.getFilesDir().getAbsolutePath();
-        String repository = "Bergamot";
-        Path rootPath = Paths.get(appData, repository, "English-German tiny", "ende.student.tiny11");
-        if (rootPath.toFile().exists()) {
-            int encoderLayers = 6;
-            int decoderLayers = 2;
-            int feedForwardDepth = 2;
-            int numHeads = 8;
-            ModelConfig config = new ModelConfig(encoderLayers, decoderLayers, feedForwardDepth, numHeads, "sentence");
-            // Package archive = new Package();
-
-            String model_name = "model.intgemm.alphas.bin";
-            String vocabulary_name = "vocab.deen.spm";
-            String shortlist_name = "lex.s2t.bin";
-
-            int cacheSize = 1024;
-            Service service = new Service(cacheSize);
-
-            Package archive =
-                    new Package(
-                            Paths.get(rootPath.toString(), model_name).toString(),
-                            Paths.get(rootPath.toString(), vocabulary_name).toString(),
-                            Paths.get(rootPath.toString(), shortlist_name).toString(),
-                            "");
-
-            Model model = new Model(config, archive);
-
-            TextWatcher watcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    boolean html = false;
-                    List<String> sources = new ArrayList<>();
-                    sources.add(s.toString());
-                    String[] targets = service.translate(model, sources, html);
-                    binding.textviewFirst.setText(targets[0]);
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            };
-
-            binding.editTextFirst.addTextChangedListener(watcher);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    binding = null;
+  }
 }

@@ -10,31 +10,31 @@ import java.util.ArrayList;
 
 public class RepositoryAdapter extends ArrayAdapter<Repository> {
 
-    public RepositoryAdapter(Context context, ArrayList<Repository> repositories) {
-        super(context, 0, repositories);
+  public RepositoryAdapter(Context context, ArrayList<Repository> repositories) {
+    super(context, 0, repositories);
+  }
+
+  @Override
+  public View getView(int position, View convertView, ViewGroup parent) {
+    Repository repository = getItem(position);
+
+    if (convertView == null) {
+      convertView =
+          LayoutInflater.from(getContext()).inflate(R.layout.repository_list_item, parent, false);
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Repository repository = getItem(position);
+    TextView nameTextView = convertView.findViewById(R.id.text_name);
+    TextView urlTextView = convertView.findViewById(R.id.text_url);
 
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.repository_list_item, parent, false);
-        }
+    nameTextView.setText(repository.getName());
+    urlTextView.setText(repository.getUrl());
 
-        TextView nameTextView = convertView.findViewById(R.id.text_name);
-        TextView urlTextView = convertView.findViewById(R.id.text_url);
+    return convertView;
+  }
 
-        nameTextView.setText(repository.getName());
-        urlTextView.setText(repository.getUrl());
-
-        return convertView;
-    }
-
-    public void update(ArrayList<Repository> repositories) {
-        clear(); // Clear existing data
-        addAll(repositories); // Add new data
-        notifyDataSetChanged(); // Notify adapter of data change
-    }
+  public void update(ArrayList<Repository> repositories) {
+    clear(); // Clear existing data
+    addAll(repositories); // Add new data
+    notifyDataSetChanged(); // Notify adapter of data change
+  }
 }
-
