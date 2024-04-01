@@ -27,6 +27,7 @@ public class Recorder {
   private Thread mExecutorThread = null;
   private IRecorderListener mListener = null;
 
+
   public Recorder(Context context) {
     mContext = context;
   }

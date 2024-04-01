@@ -35,6 +35,8 @@ public class Whisper {
   private Thread mExecutorThread = null;
   private IWhisperListener mUpdateListener = null;
 
+
+
   public Whisper(Context context) {
     mContext = context;
   }
