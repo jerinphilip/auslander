@@ -281,7 +281,8 @@ public class FirstFragment extends Fragment {
         for (String assetFileName : assetFiles) {
           if (assetFileName.endsWith("." + extension)) {
             File outFile = new File(destFolder, assetFileName);
-            if (outFile.exists()) continue;
+            Log.d("FFragment", assetFileName + " -> " + outFile.toString());
+            // if (outFile.exists()) continue;
 
             InputStream inputStream = assetManager.open(assetFileName);
             OutputStream outputStream = new FileOutputStream(outFile);
@@ -293,13 +294,16 @@ public class FirstFragment extends Fragment {
               outputStream.write(buffer, 0, read);
             }
 
+
             inputStream.close();
             outputStream.flush();
             outputStream.close();
+            Log.d("FFragment", assetFileName + " -> " + outFile.toString() + " SUCCESS");
           }
         }
       }
     } catch (IOException e) {
+      Log.d("FFragment", " File copy FAILED");
       e.printStackTrace();
     }
   }

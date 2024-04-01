@@ -13,7 +13,6 @@ import com.github.jerinphilip.auslander.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-
   private AppBarConfiguration appBarConfiguration;
   private ActivityMainBinding binding;
 
